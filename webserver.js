@@ -1,15 +1,17 @@
 const http = require('http'); //Http Modul
 const port = 8080; //Port
+const handle = require("./handle");
+this.server = http.createServer(handle);
 
 //Server Erzeugung
-const server = http.createServer(function(req, res) {
-    res.writeHead(200, {
-      'Content-Type': 'text/html'
-    });
-    res.write("<h1>Hello World!</h1><p>Karma Khamritshang</p><ul><li>Test</li><li>Test</li><li>Test</li></ul>");  //Html Code
-    res.end();
-});
-
-server.listen(port, () => {
-    console.log('Server is available under http://127.0.0.1:' + port + '/'); //CLI Text
-});
+exports.listen = function () {
+    // console.log(arguments);
+    this.server.listen.apply(this.server, arguments);
+    console.log(
+      "Server is available under http://127.0.0.1:" + arguments[0] + "/"
+    );
+  };
+  
+  exports.close = function (callback) {
+    this.server.close(callback);
+  };
